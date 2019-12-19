@@ -16,35 +16,35 @@ The server attempts to parse a configuration file during startup, located at `./
 
 ```json
 {
-    "id": "beer-survey",
-    "name": "Beer Survey",
-    "description": "What do you think about our beer on tap?",
-    "options": [
+  "id": "beer-survey",
+  "name": "Beer Survey",
+  "description": "What do you think about our beer on tap?",
+  "options": [
+    {
+      "id": "like",
+      "name": "Awesome!"
+    },
+    {
+      "id": "dislike",
+      "name": "Meh.",
+      "description": "What don't you like about it?",
+      "options": [
         {
-            "id": "like",
-            "name": "Awesome!"
+          "id": "dislike-unhealthy",
+          "name": "It's unhealthy"
         },
         {
-            "id": "dislike",
-            "name": "Meh.",
-            "description": "What don't you like about it?",
-            "options": [
-                {
-                    "id": "dislike-unhealthy",
-                    "name": "It's unhealthy"
-                },
-                {
-                    "id": "dislike-temperature",
-                    "name": "It's not cold"
-                },
-                {
-                    "id": "dislike-taste",
-                    "name": "Tastes aweful"
-                }
-            ]
+          "id": "dislike-temperature",
+          "name": "It's not cold"
+        },
+        {
+          "id": "dislike-taste",
+          "name": "Tastes aweful"
         }
-    ],
-    "analyticsId": "UA-XXXXXXXX-XX"
+      ]
+    }
+  ],
+  "analyticsId": "UA-XXXXXXXX-XX"
 }
 ```
 
@@ -56,12 +56,12 @@ The server accepts `POST` requests to the `/feedback` endpoint. The body must be
 
 ```json
 {
-	"sessionId": "17a171a7-cbf8-421c-820d-69157d949330",
-	"selectedOption": {
-		"id": "like",
-		"name": "Awesome!",
-		"path": "beer-survey/like"
-	}
+  "sessionId": "17a171a7-cbf8-421c-820d-69157d949330",
+  "selectedOption": {
+    "id": "like",
+    "name": "Awesome!",
+    "path": "beer-survey/like"
+  }
 }
 ```
 
