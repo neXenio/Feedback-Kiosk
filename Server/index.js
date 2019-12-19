@@ -97,6 +97,13 @@ app.use((error, request, response, next) => {
 	response.send(error.message);
 })
 
+// set CORS headers
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // serve static directory
 app.use(express.static(path.join(__dirname, 'static')))
 
