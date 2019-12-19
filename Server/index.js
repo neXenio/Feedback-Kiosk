@@ -61,6 +61,24 @@ app.get('/config', (request, response) => {
 	response.send(config)
 })
 
+// handle unexpected errors
+app.use((error, request, response, next) => {
+	logger.log('error', 'Unexpected error: ', error)
+	socket.onAuthenticationError(request.body)
+	response.status(STATUS_CODE_ERROR)
+	response.send(error.message);
+})
+
+// set CORS headers
+app.use((request, response, next) => {
+	response.header("Access-Control-Allow-Origin", "*");
+	response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+});
+
+// serve static directory
+app.use(express.static(path.join(__dirname, 'static')))
+
 // handle feedback
 app.post('/feedback', (request, response) => {
 	logger.log('verbose', 'Received feedback request body: ', request.body)
@@ -68,10 +86,14 @@ app.post('/feedback', (request, response) => {
 
 	var selectedOption = request.body.selectedOption
 
+	if (!selectedOption.path) {
+		selectedOption.path = `${config.id}/${selectedOption.id}/`
+	}
+
 	if (analytics) {
 		// track pageview
 		var pageViewParameters = {
-			dp: `/feedback/${config.id}/${selectedOption.id}/`, // path
+			dp: `/feedback/${selectedOption.path}`, // path
 			dt: selectedOption.name, // title
 			dh: 'https://github.com/neXenio/Feedback-Kiosk' // hostname
 		}
@@ -88,24 +110,6 @@ app.post('/feedback', (request, response) => {
 
 	response.sendStatus(STATUS_CODE_SUCCESS)
 })
-
-// handle unexpected errors
-app.use((error, request, response, next) => {
-	logger.log('error', 'Unexpected error: ', error)
-	socket.onAuthenticationError(request.body)
-	response.status(STATUS_CODE_ERROR)
-	response.send(error.message);
-})
-
-// set CORS headers
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
-// serve static directory
-app.use(express.static(path.join(__dirname, 'static')))
 
 // start listening
 server.listen(PORT, () => logger.log('info', `Listening on port ${PORT}`))
