@@ -49,6 +49,7 @@ app.use(bodyParser.json());
 
 // set CORS headers
 app.use(cors())
+app.options('*', cors())
 
 // handle unexpected errors
 app.use((error, request, response, next) => {
