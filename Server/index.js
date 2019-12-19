@@ -44,7 +44,9 @@ const config = getConfigFromFile(CONFIG_PATH)
 var analytics = null
 if (config.analyticsId) {
 	logger.log('verbose', `Analytics ID: ${config.analyticsId}`)
-	analytics = ua(config.analyticsId)
+	analytics = ua(config.analyticsId, {
+		uid: config.id
+	})
 } else {
 	logger.log('warn', `Not using analytics, no ID specified in config field 'analyticsId'`)
 }
@@ -67,6 +69,15 @@ app.post('/feedback', (request, response) => {
 	var selectedOption = request.body.selectedOption
 
 	if (analytics) {
+		// track pageview
+		var pageViewParameters = {
+			dp: `/feedback/${config.id}/${selectedOption.id}/`, // path
+			dt: selectedOption.name, // title
+			dh: 'https://github.com/neXenio/Feedback-Kiosk' // hostname
+		}
+		analytics.pageview(pageViewParameters).send();
+
+		// track event
 		var eventParameters = {
 			ec: config.id, // category
 			ea: selectedOption.id, // action
@@ -74,7 +85,6 @@ app.post('/feedback', (request, response) => {
 		}
 		analytics.event(eventParameters).send()
 	}
-
 
 	response.sendStatus(STATUS_CODE_SUCCESS)
 })
