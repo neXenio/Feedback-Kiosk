@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const fs = require('fs')
 const path = require('path')
 const ua = require('universal-analytics');
+const uuidv4 = require('uuid/v4');
 const socketio = require('./socket')
 const logger = require('./logger')
 
@@ -41,16 +42,6 @@ function getConfigFromFile(path) {
 // restore config
 const config = getConfigFromFile(CONFIG_PATH)
 
-var analytics = null
-if (config.analyticsId) {
-	logger.log('verbose', `Analytics ID: ${config.analyticsId}`)
-	analytics = ua(config.analyticsId, {
-		uid: config.id
-	})
-} else {
-	logger.log('warn', `Not using analytics, no ID specified in config field 'analyticsId'`)
-}
-
 // setup body parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -84,14 +75,18 @@ app.post('/feedback', (request, response) => {
 	socket.onFeedbackReceived(request.body)
 
 	var selectedOption = request.body.selectedOption
-
 	if (!selectedOption.path) {
 		selectedOption.path = `${config.id}/${selectedOption.id}/`
 	}
 
-	if (analytics) {
+	if (config.analyticsId) {
+		// initialze analytics for session
+		const analytics = ua(config.analyticsId, {
+			uid: request.body.sessionId || uuidv4()
+		})
+
 		// track pageview
-		var pageViewParameters = {
+		const pageViewParameters = {
 			dp: `/feedback/${selectedOption.path}`, // path
 			dt: selectedOption.name, // title
 			dh: 'https://github.com/neXenio/Feedback-Kiosk' // hostname
@@ -99,12 +94,15 @@ app.post('/feedback', (request, response) => {
 		analytics.pageview(pageViewParameters).send();
 
 		// track event
-		var eventParameters = {
+		const eventParameters = {
 			ec: config.id, // category
 			ea: selectedOption.id, // action
 			el: selectedOption.name, // label
 		}
 		analytics.event(eventParameters).send()
+
+	} else {
+		logger.log('warn', `Not using analytics, no ID specified in config field 'analyticsId'`)
 	}
 
 	response.sendStatus(STATUS_CODE_SUCCESS)
