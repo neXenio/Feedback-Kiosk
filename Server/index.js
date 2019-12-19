@@ -45,6 +45,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // handle feedback
+app.get('/config', (request, response) => {
+	response.status(STATUS_CODE_SUCCESS)
+	response.send(config)
+})
+
+// handle feedback
 app.post('/feedback', (request, response) => {
 	logger.log('verbose', 'Received feedback request body: ', request.body)
 	socket.onFeedbackReceived(request.body)
