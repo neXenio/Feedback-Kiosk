@@ -19,20 +19,8 @@ const socket = (server) => {
 
 	})
 
-	this.onAuthenticationRequested = (request) => {
-		io.emit('authentication-requested', request)
-	}
-
-	this.onAuthenticationSucceeded = (request) => {
-		io.emit('authentication-succeeded', request)
-	}
-
-	this.onAuthenticationFailed = (request) => {
-		io.emit('authentication-failed', request)
-	}
-
-	this.onAuthenticationError = (request) => {
-		io.emit('authentication-error', request)
+	this.onFeedbackReceived = (request) => {
+		io.emit('feedback-received', request)
 	}
 
 	return this

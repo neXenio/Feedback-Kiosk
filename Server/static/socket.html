@@ -24,23 +24,8 @@
         console.log("Socket error: " + error);
     });
 
-    socket.on('authentication-requested', function(data) {
-        console.log('Authentication requested');
-        console.log(data);
-    });
-
-    socket.on('authentication-succeeded', function(data) {
-        console.log('Authentication succeeded');
-        console.log(data);
-    });
-
-    socket.on('authentication-failed', function(data) {
-        console.log('Authentication failed');
-        console.log(data);
-    });
-
-    socket.on('authentication-error', function(data) {
-        console.log('Authentication error');
+    socket.on('feedback-received', function(data) {
+        console.log('Feedback received');
         console.log(data);
     });
 </script>

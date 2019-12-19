@@ -47,6 +47,7 @@ app.use(bodyParser.json());
 // handle authentication requests
 app.post('/feedback', (request, response) => {
 	logger.log('verbose', 'Received feedback request body: ', request.body)
+	socket.onFeedbackReceived(request.body)
 })
 
 // handle unexpected errors
