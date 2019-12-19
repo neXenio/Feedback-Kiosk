@@ -1,6 +1,7 @@
 const winston = require('winston')
 const express = require('express')
 const http = require('http')
+const cors = require('cors')
 const bodyParser = require('body-parser')
 const fs = require('fs')
 const path = require('path')
@@ -47,10 +48,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // set CORS headers
-app.use((request, response, next) => {
-	response.header("Access-Control-Allow-Origin", "*")
-	next();
-});
+app.use(cors())
 
 // handle unexpected errors
 app.use((error, request, response, next) => {
