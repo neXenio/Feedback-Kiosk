@@ -4,6 +4,7 @@ const http = require('http')
 const bodyParser = require('body-parser')
 const fs = require('fs')
 const path = require('path')
+const ua = require('universal-analytics');
 const socketio = require('./socket')
 const logger = require('./logger')
 
@@ -40,11 +41,19 @@ function getConfigFromFile(path) {
 // restore config
 const config = getConfigFromFile(CONFIG_PATH)
 
+var analytics = null
+if (config.analyticsId) {
+	logger.log('verbose', `Analytics ID: ${config.analyticsId}`)
+	analytics = ua(config.analyticsId)
+} else {
+	logger.log('warn', `Not using analytics, no ID specified in config field 'analyticsId'`)
+}
+
 // setup body parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// handle feedback
+// provide current config
 app.get('/config', (request, response) => {
 	response.status(STATUS_CODE_SUCCESS)
 	response.send(config)
@@ -55,7 +64,17 @@ app.post('/feedback', (request, response) => {
 	logger.log('verbose', 'Received feedback request body: ', request.body)
 	socket.onFeedbackReceived(request.body)
 
-	// TODO: track feedback
+	var selectedOption = request.body.selectedOption
+
+	if (analytics) {
+		var eventParameters = {
+			ec: config.id, // category
+			ea: selectedOption.id, // action
+			el: selectedOption.name, // label
+		}
+		analytics.event(eventParameters).send()
+	}
+
 
 	response.sendStatus(STATUS_CODE_SUCCESS)
 })
