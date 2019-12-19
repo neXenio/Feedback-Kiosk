@@ -1,0 +1,28 @@
+{
+  "name": "authenticator-adapter",
+  "version": "1.0.0",
+  "description": "A webserver to process authentication requests from authenticator controllers",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.nexenio.com/scm/ba/authenticator-adapter.git"
+  },
+  "author": "neXenio GmbH",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "net-snmp": "^1.2.4",
+    "node-crc": "^1.2.2",
+    "onoff": "^4.1.3",
+    "serialport": "^7.1.5",
+    "socket.io": "^2.3.0",
+    "uuid-parse": "^1.1.0",
+    "winston": "^3.2.1"
+  }
+}
