@@ -44,10 +44,14 @@ const config = getConfigFromFile(CONFIG_PATH)
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// handle authentication requests
+// handle feedback
 app.post('/feedback', (request, response) => {
 	logger.log('verbose', 'Received feedback request body: ', request.body)
 	socket.onFeedbackReceived(request.body)
+
+	// TODO: track feedback
+
+	response.sendStatus(STATUS_CODE_SUCCESS)
 })
 
 // handle unexpected errors

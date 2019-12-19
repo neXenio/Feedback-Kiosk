@@ -13,16 +13,16 @@
             "description": "What don't you like about it?",
             "options": [
                 {
-                    "id": "aclohol",
-                    "name": "Contains alcohol"
+                    "id": "dislike-unhealthy",
+                    "name": "It's unhealthy"
                 },
                 {
-                    "id": "taste",
-                    "name": "Tastes aweful"
-                },
-                {
-                    "id": "temperature",
+                    "id": "dislike-temperature",
                     "name": "It's not cold"
+                },
+                {
+                    "id": "dislike-taste",
+                    "name": "Tastes aweful"
                 }
             ]
 		}
