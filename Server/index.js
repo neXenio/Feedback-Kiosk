@@ -55,11 +55,11 @@ if (config.analyticsId) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// provide current config
-app.get('/config', (request, response) => {
-	response.status(STATUS_CODE_SUCCESS)
-	response.send(config)
-})
+// set CORS headers
+app.use((request, response, next) => {
+	response.header("Access-Control-Allow-Origin", "*")
+	next();
+});
 
 // handle unexpected errors
 app.use((error, request, response, next) => {
@@ -69,15 +69,14 @@ app.use((error, request, response, next) => {
 	response.send(error.message);
 })
 
-// set CORS headers
-app.use((request, response, next) => {
-	response.header("Access-Control-Allow-Origin", "*");
-	response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-});
-
 // serve static directory
 app.use(express.static(path.join(__dirname, 'static')))
+
+// provide current config
+app.get('/config', (request, response) => {
+	response.status(STATUS_CODE_SUCCESS)
+	response.send(config)
+})
 
 // handle feedback
 app.post('/feedback', (request, response) => {
