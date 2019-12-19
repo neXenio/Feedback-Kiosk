@@ -16,11 +16,39 @@ The server attempts to parse a configuration file during startup, located at `./
 
 ```json
 {
-    "workInProgress": true
+    "id": "beer-survey",
+    "name": "Beer Survey",
+    "description": "What do you think about our beer on tap?",
+    "options": [
+        {
+            "id": "like",
+            "name": "Awesome!"
+        },
+        {
+            "id": "dislike",
+            "name": "Meh.",
+            "description": "What don't you like about it?",
+            "options": [
+                {
+                    "id": "dislike-unhealthy",
+                    "name": "It's unhealthy"
+                },
+                {
+                    "id": "dislike-temperature",
+                    "name": "It's not cold"
+                },
+                {
+                    "id": "dislike-taste",
+                    "name": "Tastes aweful"
+                }
+            ]
+        }
+    ],
+    "analyticsId": "UA-XXXXXXXX-XX"
 }
 ```
 
-Each adapter implementation can also specify a default configuration for itself, which will be merged with whatever is specified in the config file. If no config file is available, the `debug` adapter will be used by default.
+The `analyticsId` should be a [Google Analytics tracking ID](https://support.google.com/analytics/thread/13109681?hl=en) or `null`.
 
 ### Tracking Feedback
 
@@ -28,6 +56,13 @@ The server accepts `POST` requests to the `/feedback` endpoint. The body must be
 
 ```json
 {
-    "workInProgress": true
+	"sessionId": "17a171a7-cbf8-421c-820d-69157d949330",
+	"selectedOption": {
+		"id": "like",
+		"name": "Awesome!",
+		"path": "beer-survey/like"
+	}
 }
 ```
+
+The `sessionId` should be a new random UUID each time a user new starts interacting with the form.
