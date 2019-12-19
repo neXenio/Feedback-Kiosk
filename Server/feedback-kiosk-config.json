@@ -1,3 +1,30 @@
 {
-	"debug": true
+	"id": "beer-survey",
+	"name": "Beer Survey",
+	"description": "What do you think about our beer on tap?",
+	"options": [
+		{
+			"id": "like",
+			"name": "Awesome!"
+		},
+		{
+			"id": "dislike",
+			"name": "Meh.",
+            "description": "What don't you like about it?",
+            "options": [
+                {
+                    "id": "aclohol",
+                    "name": "Contains alcohol"
+                },
+                {
+                    "id": "taste",
+                    "name": "Tastes aweful"
+                },
+                {
+                    "id": "temperature",
+                    "name": "It's not cold"
+                }
+            ]
+		}
+	]
 }
