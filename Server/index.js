@@ -7,7 +7,7 @@ const path = require('path')
 const socketio = require('./socket')
 const logger = require('./logger')
 
-const CONFIG_PATH_DEFAULT = 'feedback-kiosk.conf'
+const CONFIG_PATH_DEFAULT = './feedback-kiosk-config.json'
 const CONFIG_PATH = process.env.FEEDBACK_KIOSK_CONFIG || CONFIG_PATH_DEFAULT
 
 const STATUS_CODE_SUCCESS = 200
