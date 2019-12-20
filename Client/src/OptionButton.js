@@ -9,7 +9,7 @@ const StyledRoot = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
-  background-color: #A396FF;
+  background-color: #BD8BD9;
   color: white;
   
   font-size: 26px;

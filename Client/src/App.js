@@ -148,7 +148,7 @@ function App() {
         </p>
       </StyledHeader>
       <StyledDescription>
-        {currentStep.description ? currentStep.description : hasUserWon ? "You won a Sudexo! <3" : "Thank you for your time!"}
+        {currentStep.description ? currentStep.description : hasUserWon ? "You won a Sodexo! <3" : "Thank you for your time!"}
       </StyledDescription>
       <StyledBody>
         <StyledResponsiveChildren>
