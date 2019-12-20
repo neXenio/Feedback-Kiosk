@@ -1,31 +1,98 @@
 {
-	"id": "beer-survey",
-	"name": "Beer Survey",
-	"description": "What do you think about our beer on tap?",
-	"options": [
-		{
-			"id": "like",
-			"name": "Awesome!"
-		},
-		{
-			"id": "dislike",
-			"name": "Meh.",
-            "description": "What don't you like about it?",
-            "options": [
-                {
-                    "id": "dislike-unhealthy",
-                    "name": "It's unhealthy"
-                },
-                {
-                    "id": "dislike-temperature",
-                    "name": "It's not cold"
-                },
-                {
-                    "id": "dislike-taste",
-                    "name": "Tastes aweful"
-                }
-            ]
-		}
-	],
-    "analyticsId": "UA-15327134-31"
+  "id": "feedback-kiosk",
+  "name": "Feedback Kiosk",
+  "description": "Were you able to enter the office using seamless?",
+  "options": [
+    {
+      "id": "yes",
+      "name": "Sure!",
+      "description": "What's your OS?",
+      "options": [
+        {
+         "id": "ios",
+         "name": "iOS",
+         "description": "Was it seamless?",
+         "options": [
+           {
+             "id": "seamless-entrance",
+             "name": "All the way!"
+           },
+           {
+             "id": "with-interaction",
+             "name": "No, it required interaction" 
+           },
+           {
+             "id": "sudden-entrance",
+             "name": "No, but it suddenly worked"
+           }
+         ]
+        },
+        {
+         "id": "android",
+         "name": "Android",
+         "description": "Was it seamless?",
+         "options": [
+           {
+             "id": "seamless-entrance",
+             "name": "All the way!"
+           },
+           {
+             "id": "with-interaction",
+             "name": "No, it required interaction" 
+           },
+           {
+             "id": "sudden-entrance",
+             "name": "No, but it suddenly worked"
+           }
+         ]
+        }
+      ]
+    },
+    {
+      "id": "no",
+      "name": "No):",
+      "description": "What's your OS?",
+      "options": [
+        {
+         "id": "ios",
+         "name": "iOS",
+         "description": "What went wrong?",
+         "options": [
+           {
+             "id": "missing-factor",
+             "name": "Missing factor"
+           },
+           {
+             "id": "no-ides",
+             "name": "I don't know" 
+           },
+           {
+             "id": "error",
+             "name": "Error"
+           }
+         ]
+        },
+        {
+         "id": "android",
+         "name": "Android",
+         "description": "What went wrong?",
+         "options": [
+           {
+             "id": "missing-factor",
+             "name": "Missing factor"
+           },
+           {
+             "id": "no-ides",
+             "name": "I don't know" 
+           },
+           {
+             "id": "error",
+             "name": "Error"
+           }
+         ]
+        }
+      ]
+    }
+  ],
+  "analyticsId": "UA-XXXXXXXX-XX"
 }
