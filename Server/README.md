@@ -10,6 +10,8 @@ A `node.js` application exposing a web server for feedback gathering.
 
 `npm start` to start the server
 
+Open [http://localhost:8080](http://localhost:8080)
+
 ### Configuring Feedback Options
 
 The server attempts to parse a configuration file during startup, located at `./feedback-kiosk-config.json`. That file should be a JSON containg the feedback options:
