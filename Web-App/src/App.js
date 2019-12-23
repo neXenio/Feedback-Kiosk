@@ -150,7 +150,7 @@ function App() {
       <ProgressBar show={resetTimer <= 5000} renderableProgress={Math.min(resetTimer / 5000, 1)} />
       <StyledHeader>
         <p>
-          <code>Feedback-Kiosk</code>
+          <code>{config.name}</code>
         </p>
       </StyledHeader>
       <StyledDescription>
