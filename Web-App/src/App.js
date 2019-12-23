@@ -45,7 +45,7 @@ const StyledResponsiveChildren = styled(ResponsiveChildren)`
 
 const searchParameters = new URLSearchParams(window.location.search);
 const backendPort = searchParameters.get('backendPort') || defaultBackendPort;
-const backendHost = window.location.protocol + '//' + window.location.hostname + ':' + backendPort;
+const backendHost = `${window.location.protocol}//${window.location.hostname}:${backendPort}`;
 
 function App() {
   const [config, setConfig] = useState();
