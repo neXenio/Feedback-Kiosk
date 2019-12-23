@@ -8,35 +8,19 @@ import { ResponsiveChildren } from './ResponsiveChildren.js';
 import { OptionButton } from "./OptionButton.js";
 
 const StyledRoot = styled.div`
-  text-align: center;
+  box-sizing: border-box;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: 0 26px;
-`;
+  padding: 32px;
 
-const StyledHeader = styled.header`
-  height: 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
 `;
 
 const StyledDescription = styled.span`
-  font-size: calc(14px + 2vmin);
+  font-size: calc(16px + 2vmin);
   padding-bottom: 40px;
-`;
-
-const StyledBody = styled.div`
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 `;
 
 const StyledResponsiveChildren = styled(ResponsiveChildren)`
@@ -61,6 +45,7 @@ function App() {
         let config = await response.json();
         setConfig(config);
         setCurrentStep(config);
+        document.title = config.name;
         
         if (config.hasOwnProperty("completionMessage")) {
           setCompletionMessage(config.completionMessage);
@@ -148,21 +133,14 @@ function App() {
   return (
     <StyledRoot>
       <ProgressBar show={resetTimer <= 5000} renderableProgress={Math.min(resetTimer / 5000, 1)} />
-      <StyledHeader>
-        <p>
-          <code>{config.name}</code>
-        </p>
-      </StyledHeader>
       <StyledDescription>
         {currentStep.description || completionMessage}
       </StyledDescription>
-      <StyledBody>
-        <StyledResponsiveChildren>
-          {currentStep.options && currentStep.options.map(option => (
-            <OptionButton key={option.id} option={option} selectOption={selectOption} />
-          ))}
-        </StyledResponsiveChildren>
-      </StyledBody>
+      <StyledResponsiveChildren>
+        {currentStep.options && currentStep.options.map(option => (
+          <OptionButton key={option.id} option={option} selectOption={selectOption} />
+        ))}
+      </StyledResponsiveChildren>
     </StyledRoot>
   );
 }
