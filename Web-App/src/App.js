@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState } from "react";
 import styled from "styled-components";
 import uuid from "uuid/v4";
 
-import { host } from "./constants";
+import { defaultBackendPort } from "./constants";
 import { ProgressBar } from './ProgressBar.js';
 import { ResponsiveChildren } from './ResponsiveChildren.js';
 import { OptionButton } from "./OptionButton.js";
@@ -43,6 +43,10 @@ const StyledResponsiveChildren = styled(ResponsiveChildren)`
   width: 100%;
 `;
 
+const searchParameters = new URLSearchParams(window.location.search);
+const backendPort = searchParameters.get('backendPort') || defaultBackendPort;
+const backendHost = `${window.location.protocol}//${window.location.hostname}:${backendPort}`;
+
 function App() {
   const [config, setConfig] = useState();
   const [currentStep, setCurrentStep] = useState();
@@ -52,7 +56,7 @@ function App() {
   const [hasUserWon, setHasUserWon] = useState(false);
 
   useEffect(() => {
-    fetch(`${host}/config`).then(
+    fetch(`${backendHost}/config`).then(
       async response => {
         let config = await response.json();
         setConfig(config);
@@ -126,7 +130,7 @@ function App() {
       path: `${currentPath}/${option.id}`
     };
 
-    fetch(`${host}/feedback`, {
+    fetch(`${backendHost}/feedback`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
