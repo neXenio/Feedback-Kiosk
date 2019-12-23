@@ -10,6 +10,8 @@ import { OptionButton } from "./OptionButton.js";
 const StyledRoot = styled.div`
   box-sizing: border-box;
   min-height: 100vh;
+  max-width: 1280px;
+  margin: 0 auto;
   padding: 32px;
 
   display: flex;
@@ -132,7 +134,7 @@ function App() {
 
   return (
     <StyledRoot>
-      <ProgressBar show={resetTimer <= 5000} renderableProgress={Math.min(resetTimer / 5000, 1)} />
+      <ProgressBar show={currentStep !== config && resetTimer <= 5000} renderableProgress={Math.min(resetTimer / 5000, 1)} />
       <StyledDescription>
         {currentStep.description || completionMessage}
       </StyledDescription>

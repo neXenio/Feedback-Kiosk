@@ -4,10 +4,12 @@ import styled from "styled-components";
 const StyledRoot = styled.div`
   width: 100%;
   height: 120px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   border-radius: 5px;
   background-color: #BD8BD9;
   color: white;

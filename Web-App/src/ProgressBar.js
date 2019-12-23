@@ -26,7 +26,7 @@ const StyledProgressBar = styled.div`
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 
-  transition: transform 200ms linear, opacity 0ms;
+  transition: transform 200ms linear;
 `;
 
 export function ProgressBar({ renderableProgress, show }) {
