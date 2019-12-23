@@ -1,31 +1,31 @@
 {
-	"id": "beer-survey",
-	"name": "Beer Survey",
-	"description": "What do you think about our beer on tap?",
-	"options": [
-		{
-			"id": "like",
-			"name": "Awesome!"
-		},
-		{
-			"id": "dislike",
-			"name": "Meh.",
-            "description": "What don't you like about it?",
-            "options": [
-                {
-                    "id": "dislike-unhealthy",
-                    "name": "It's unhealthy"
-                },
-                {
-                    "id": "dislike-temperature",
-                    "name": "It's not cold"
-                },
-                {
-                    "id": "dislike-taste",
-                    "name": "Tastes aweful"
-                }
-            ]
-		}
-	],
-    "analyticsId": "UA-15327134-31"
+  "id": "beer-survey",
+  "name": "Beer Survey",
+  "description": "What do you think about our beer on tap?",
+  "options": [
+    {
+      "id": "like",
+      "name": "Awesome!"
+    },
+    {
+      "id": "dislike",
+      "name": "Meh.",
+      "description": "What don't you like about it?",
+      "options": [
+        {
+          "id": "dislike-unhealthy",
+          "name": "It's unhealthy"
+        },
+        {
+          "id": "dislike-temperature",
+          "name": "It's not cold"
+        },
+        {
+          "id": "dislike-taste",
+          "name": "Tastes aweful"
+        }
+      ]
+    }
+  ],
+  "analyticsId": "UA-15327134-31"
 }
