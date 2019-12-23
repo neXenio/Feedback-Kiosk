@@ -128,7 +128,7 @@ function App() {
     json.selectedOption = {
       id: option.id,
       name: option.name,
-      path: `${currentPath}/${option.id}`
+      path: `${config.id}${currentPath}/${option.id}`
     };
 
     fetch(`${backendHost}/feedback`, {
