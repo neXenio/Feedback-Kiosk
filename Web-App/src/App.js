@@ -54,7 +54,6 @@ function App() {
   const [completionMessage, setCompletionMessage] = useState("Thanks for your feedback!");
   const [currentSessionId, setCurrentSessionId] = useState(uuid());
   const [resetTimer, setResetTimer] = useState(null);
-  const [hasUserWon, setHasUserWon] = useState(false);
 
   useEffect(() => {
     fetch(`${backendHost}/config`).then(
@@ -62,7 +61,10 @@ function App() {
         let config = await response.json();
         setConfig(config);
         setCurrentStep(config);
-        setCompletionMessage(config.completionMessage || completionMessage);
+        
+        if (config.hasOwnProperty("completionMessage")) {
+          setCompletionMessage(config.completionMessage);
+        }  
       },
       async error => {
         console.error("Network/connection error", error);
@@ -77,8 +79,6 @@ function App() {
       setCurrentPath("");
       setCurrentStep(config);
       setResetTimer(null);
-
-      setHasUserWon(false);
     },
     [config],
   );
@@ -93,7 +93,6 @@ function App() {
     }
 
     if (!currentStep.hasOwnProperty("options")) {
-      setHasUserWon(Math.random() <= 0.05);
       setTimeout(() => resetSession(), 3000);
     }
   }, [currentStep, resetSession, config]);
@@ -155,7 +154,7 @@ function App() {
         </p>
       </StyledHeader>
       <StyledDescription>
-        {currentStep.description ? currentStep.description : hasUserWon ? "You won a Sodexo! <3" : completionMessage}
+        {currentStep.description || completionMessage}
       </StyledDescription>
       <StyledBody>
         <StyledResponsiveChildren>
