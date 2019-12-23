@@ -51,6 +51,7 @@ function App() {
   const [config, setConfig] = useState();
   const [currentStep, setCurrentStep] = useState();
   const [currentPath, setCurrentPath] = useState("");
+  const [completionMessage, setCompletionMessage] = useState("Thanks for your feedback!");
   const [currentSessionId, setCurrentSessionId] = useState(uuid());
   const [resetTimer, setResetTimer] = useState(null);
   const [hasUserWon, setHasUserWon] = useState(false);
@@ -61,6 +62,7 @@ function App() {
         let config = await response.json();
         setConfig(config);
         setCurrentStep(config);
+        setCompletionMessage(config.completionMessage || completionMessage);
       },
       async error => {
         console.error("Network/connection error", error);
@@ -140,6 +142,7 @@ function App() {
   }
 
   if (!config || !currentStep) {
+    // TODO: add an error message or link to documentation
     return null;
   }
 
@@ -152,7 +155,7 @@ function App() {
         </p>
       </StyledHeader>
       <StyledDescription>
-        {currentStep.description ? currentStep.description : hasUserWon ? "You won a Sodexo! <3" : "Thank you for your time!"}
+        {currentStep.description ? currentStep.description : hasUserWon ? "You won a Sodexo! <3" : completionMessage}
       </StyledDescription>
       <StyledBody>
         <StyledResponsiveChildren>
