@@ -72,3 +72,12 @@ The server accepts `POST` requests to the `/feedback` endpoint. The body must be
 The `sessionId` should be a new random UUID each time a user new starts interacting with the form.
 
 The `path` should be a concatenated string of all the parent option `id` fields, separated with a `/`, ending with the selected option `id`.
+
+### Websocket
+
+Submitted feedback will be emitted by a [socket.io](https://socket.io/) server.
+
+Clients can connect to it and listen for the `feedback-received` event. A demo implementation that logs events to the consolse can be found at `/socket`.
+
+
+

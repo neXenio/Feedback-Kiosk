@@ -99,7 +99,6 @@ app.post('/feedback', (request, response) => {
 			el: selectedOption.name, // label
 		}
 		analytics.event(eventParameters).send()
-
 	} else {
 		logger.log('warn', `Not using analytics, no ID specified in config field 'analyticsId'`)
 	}
