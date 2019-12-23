@@ -48,7 +48,11 @@ The server attempts to parse a configuration file during startup, located at `./
 }
 ```
 
+Options can be nested to create followup questions.
+
 The `analyticsId` should be a [Google Analytics tracking ID](https://support.google.com/analytics/thread/13109681?hl=en) or `null`.
+
+You can see the currently active configuration by sending a `GET` request to the `/config` endpoint.
 
 ### Tracking Feedback
 
@@ -66,3 +70,5 @@ The server accepts `POST` requests to the `/feedback` endpoint. The body must be
 ```
 
 The `sessionId` should be a new random UUID each time a user new starts interacting with the form.
+
+The `path` should be a concatenated string of all the parent option `id` fields, separated with a `/`, ending with the selected option `id`.
