@@ -14,7 +14,7 @@ Open [http://localhost:8080](http://localhost:8080)
 
 ### Configuring Feedback Options
 
-The server attempts to parse a configuration file during startup, located at `./feedback-kiosk-config.json`. That file should be a JSON containg the feedback options:
+The server attempts to parse a configuration file during startup, located at `./feedback-kiosk-config.json`. You can also use the `FEEDBACK_KIOSK_CONFIG` environment variable to specify a different file location. That file should be a JSON containg the feedback options:
 
 ```json
 {
@@ -85,5 +85,26 @@ Submitted feedback will be emitted by a [socket.io](https://socket.io/) server.
 
 Clients can connect to it and listen for the `feedback-received` event. A demo implementation that logs events to the consolse can be found at `/socket`.
 
+### Rewards
+
+The web-app can provide rewards that users may receive after submitting feedback.
+
+#### Creating Rewards
+
+A `GET` request to `/reward` will create a new reward. Each reward contains a random UUID, the timestamp of generation, and a hash for verification purposes.
+
+```json
+{
+  "id": "32950d1a-57c0-4266-bace-d933194cfae8",
+  "timestamp": 1578324375962,
+  "verification": "8c396421c23a56b771f4b3480b724f238d699e3470293658a3dcaa0f009d517a"
+}
+```
+
+#### Verifying Rewards
+
+A `POST` request to `/reward` with a request body similar to the JSON above will verify the reward. The response status code will be `200` if the reward is valid or `401` if not.
+
+The reward generation and verification uses a secret, which you can modify by setting the `FEEDBACK_KIOSK_SECRET` environment variable.
 
 
