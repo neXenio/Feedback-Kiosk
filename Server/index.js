@@ -118,9 +118,12 @@ app.get('/reward', (request, response) => {
 
 // verify rewards
 app.post('/reward', (request, response) => {
-	if (Reward.isValid(request.body, SECRET)) {
+	const reward = request.body
+	if (Reward.isValid(reward, SECRET)) {
+		logger.log('info', 'Reward is valid: ', reward)
 		response.sendStatus(STATUS_CODE_SUCCESS)
 	} else {
+		logger.log('warn', 'Reward is invalid: ', reward)
 		response.sendStatus(STATUS_CODE_UNAUTHORIZED)
 	}
 })

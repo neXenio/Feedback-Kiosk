@@ -95,9 +95,9 @@ A `GET` request to `/reward` will create a new reward. Each reward contains a ra
 
 ```json
 {
-  "id": "32950d1a-57c0-4266-bace-d933194cfae8",
-  "timestamp": 1578324375962,
-  "verification": "8c396421c23a56b771f4b3480b724f238d699e3470293658a3dcaa0f009d517a"
+  "id": "54b653dc-fe69-42b3-8fda-005a5e733e36",
+  "timestamp": 1578326033098,
+  "verification": "04de7357c037971561bf47f456c6fda8dce544691874f0ccd932ea97e9bbdc02"
 }
 ```
 
