@@ -24,11 +24,13 @@ The server attempts to parse a configuration file during startup, located at `./
   "options": [
     {
       "id": "like",
-      "name": "Awesome!"
+      "name": "Awesome!",
+      "completionMessage": "Glad you like it!"
     },
     {
       "id": "dislike",
       "name": "Meh.",
+      "completionMessage": "Thanks for your feedback.",
       "description": "What don't you like about it?",
       "options": [
         {
@@ -53,6 +55,8 @@ The server attempts to parse a configuration file during startup, located at `./
 Options can be nested to create followup questions.
 
 The `analyticsId` should be a [Google Analytics tracking ID](https://support.google.com/analytics/thread/13109681?hl=en) or `null`.
+
+The `completionMessage` can be set to configure a message that will be briefly displayed after completing the survey. Different options can have different completion messages.
 
 You can see the currently active configuration by sending a `GET` request to the `/config` endpoint.
 
