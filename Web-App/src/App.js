@@ -51,7 +51,7 @@ function App() {
         
         if (config.hasOwnProperty("completionMessage")) {
           setCompletionMessage(config.completionMessage);
-        }  
+        }
       },
       async error => {
         console.error("Network/connection error", error);
@@ -107,6 +107,9 @@ function App() {
     sendFeedback(option);
     setCurrentStep(option);
     setCurrentPath(`${currentPath}/${option.id}`);
+    if (option.hasOwnProperty("completionMessage")) {
+      setCompletionMessage(option.completionMessage);
+    }
   }
 
   function sendFeedback(option) {
