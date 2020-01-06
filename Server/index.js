@@ -14,7 +14,8 @@ const Reward = require('./reward')
 const CONFIG_PATH_DEFAULT = './feedback-kiosk-config.json'
 const CONFIG_PATH = process.env.FEEDBACK_KIOSK_CONFIG || CONFIG_PATH_DEFAULT
 
-const SECRET = process.env.FEEDBACK_KIOSK_SECRET || "change me!"
+const SECRET_DEFAULT = 'change me!'
+const SECRET = process.env.FEEDBACK_KIOSK_SECRET || SECRET_DEFAULT
 
 const STATUS_CODE_SUCCESS = 200
 const STATUS_CODE_UNAUTHORIZED = 401
@@ -121,10 +122,12 @@ app.post('/reward', (request, response) => {
 	const reward = request.body
 	if (Reward.isValid(reward, SECRET)) {
 		logger.log('info', 'Reward is valid: ', reward)
-		response.sendStatus(STATUS_CODE_SUCCESS)
+		response.status(STATUS_CODE_SUCCESS)
+		response.send('Valid')
 	} else {
 		logger.log('warn', 'Reward is invalid: ', reward)
-		response.sendStatus(STATUS_CODE_UNAUTHORIZED)
+		response.status(STATUS_CODE_UNAUTHORIZED)
+		response.send('Invalid')
 	}
 })
 
