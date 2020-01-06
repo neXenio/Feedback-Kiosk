@@ -5,13 +5,16 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const fs = require('fs')
 const path = require('path')
-const ua = require('universal-analytics');
-const uuidv4 = require('uuid/v4');
+const ua = require('universal-analytics')
+const uuidv4 = require('uuid/v4')
 const socketio = require('./socket')
 const logger = require('./logger')
+const Reward = require('./reward')
 
 const CONFIG_PATH_DEFAULT = './feedback-kiosk-config.json'
 const CONFIG_PATH = process.env.FEEDBACK_KIOSK_CONFIG || CONFIG_PATH_DEFAULT
+
+const SECRET = process.env.FEEDBACK_KIOSK_SECRET || "change me!"
 
 const STATUS_CODE_SUCCESS = 200
 const STATUS_CODE_UNAUTHORIZED = 401
@@ -104,6 +107,25 @@ app.post('/feedback', (request, response) => {
 	}
 
 	response.sendStatus(STATUS_CODE_SUCCESS)
+})
+
+// create rewards
+app.get('/reward', (request, response) => {
+	const reward = new Reward(SECRET)
+	logger.log('info', 'Created reward: ', reward)
+	response.send(reward)
+})
+
+// verify rewards
+app.post('/reward', (request, response) => {
+	const reward = request.body
+	const valid = Reward.isValid(reward, SECRET)
+
+	if (valid) {
+		response.sendStatus(STATUS_CODE_SUCCESS)
+	} else {
+		response.sendStatus(STATUS_CODE_UNAUTHORIZED)
+	}
 })
 
 // start listening
