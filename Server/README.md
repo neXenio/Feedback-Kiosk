@@ -89,6 +89,8 @@ Clients can connect to it and listen for the `feedback-received` event. A demo i
 
 The web-app can provide rewards that users may receive after submitting feedback.
 
+The reward generation and verification uses a secret, which you should modify by setting the `FEEDBACK_KIOSK_SECRET` environment variable. You can also change the default secret in `./routers/reward.js`
+
 #### Creating Rewards
 
 A `GET` request to `/reward` will create a new reward. Each reward contains a random UUID, the timestamp of generation, and a hash for verification purposes.
@@ -117,6 +119,3 @@ A `POST` request to `/reward/qr` with a photo of an QR code will parse and verif
     "isValid": true
 }
 ```
-
-> The reward generation and verification uses a secret, which you should modify by setting the `FEEDBACK_KIOSK_SECRET` environment variable. You can also change the default secret in `./routers/reward.js`
-
