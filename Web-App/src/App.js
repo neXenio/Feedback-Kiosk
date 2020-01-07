@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState } from "react";
 import styled from "styled-components";
 import uuid from "uuid/v4";
 
-import { defaultBackendPort } from "./constants";
+import { backendPort } from "./constants";
 import { ProgressBar } from './ProgressBar.js';
 import { ResponsiveChildren } from './ResponsiveChildren.js';
 import { OptionButton } from "./OptionButton.js";
@@ -29,9 +29,18 @@ const StyledResponsiveChildren = styled(ResponsiveChildren)`
   width: 100%;
 `;
 
-const searchParameters = new URLSearchParams(window.location.search);
-const backendPort = searchParameters.get('backendPort') || defaultBackendPort;
-const backendHost = `${window.location.protocol}//${window.location.hostname}:${backendPort}`;
+const apiEndPoint = getApiEndpoint();
+
+function getApiEndpoint() {
+  if (process.env.NODE_ENV === 'production') {
+    // in production, the api backend is available at the same host
+    return '/api'
+  } else {
+    // in development, the api backend runs on a different port
+    const backendHost = `${window.location.protocol}//${window.location.hostname}:${backendPort}`;
+    return `${backendHost}/api`
+  }
+}
 
 function App() {
   const [config, setConfig] = useState();
@@ -42,7 +51,7 @@ function App() {
   const [resetTimer, setResetTimer] = useState(null);
 
   useEffect(() => {
-    fetch(`${backendHost}/config`).then(
+    fetch(`${apiEndPoint}/config`).then(
       async response => {
         let config = await response.json();
         setConfig(config);
@@ -121,7 +130,7 @@ function App() {
       path: `${config.id}${currentPath}/${option.id}`
     };
 
-    fetch(`${backendHost}/feedback`, {
+    fetch(`${apiEndPoint}/feedback`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

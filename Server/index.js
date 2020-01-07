@@ -21,11 +21,13 @@ const STATUS_CODE_SUCCESS = 200
 const STATUS_CODE_UNAUTHORIZED = 401
 const STATUS_CODE_ERROR = 500
 
-const PORT = 8080
+const PORT = 3001
 
 const app = express()
 const server = http.createServer(app)
 const socket = socketio(server)
+
+const apiRouter = express.Router()
 
 /**
  * Reads the configuration JSON from the filesystem.
@@ -67,13 +69,13 @@ app.use((error, request, response, next) => {
 app.use(express.static(path.join(__dirname, 'static')))
 
 // provide current config
-app.get('/config', (request, response) => {
+apiRouter.get('/config', (request, response) => {
 	response.status(STATUS_CODE_SUCCESS)
-	response.send(config)
+	response.json(config)
 })
 
 // handle feedback
-app.post('/feedback', (request, response) => {
+apiRouter.post('/feedback', (request, response) => {
 	logger.log('verbose', 'Received feedback request body: ', request.body)
 	socket.onFeedbackReceived(request.body)
 
@@ -111,14 +113,14 @@ app.post('/feedback', (request, response) => {
 })
 
 // create rewards
-app.get('/reward', (request, response) => {
+apiRouter.get('/reward', (request, response) => {
 	const reward = new Reward(SECRET)
 	logger.log('info', 'Created reward: ', reward)
 	response.send(reward)
 })
 
 // verify rewards
-app.post('/reward', (request, response) => {
+apiRouter.post('/reward', (request, response) => {
 	const reward = request.body
 	if (Reward.isValid(reward, SECRET)) {
 		logger.log('info', 'Reward is valid: ', reward)
@@ -130,6 +132,8 @@ app.post('/reward', (request, response) => {
 		response.send('Invalid')
 	}
 })
+
+app.use(['/api', ''], apiRouter)
 
 // start listening
 server.listen(PORT, () => logger.log('info', `Listening on port ${PORT}`))
