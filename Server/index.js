@@ -48,7 +48,7 @@ const config = getConfigFromFile(CONFIG_PATH)
 
 // setup body parser
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json({ type: 'application/*+json' }))
+app.use(bodyParser.json({ type: 'application/json' }))
 
 // set CORS headers
 app.use(cors())

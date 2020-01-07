@@ -54,7 +54,11 @@ rewardRouter.get('/qr', (request, response) => {
 	})
 })
 
-// verify QR code
+/**
+ * Accepts a file as 'multipart/form-data', reads it as an image and
+ * tries to detect a QR code. The QR code data will be decoded, parsed to
+ * an reward and verified.
+ */
 rewardRouter.post('/qr', upload.single('image'), (request, response) => {
 	Jimp.read(request.file.buffer, (error, image) => {
 		if (error) {
