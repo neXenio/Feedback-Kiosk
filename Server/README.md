@@ -109,5 +109,14 @@ A `POST` request to `/reward` with a request body similar to the JSON above will
 
 A `POST` request to `/reward/qr` with a photo of an QR code will parse and verify the encoded reward. The image must be provided as `multipart/form-data`.
 
-The reward generation and verification uses a secret, which you should modify by setting the `FEEDBACK_KIOSK_SECRET` environment variable. You can change the default secret in `./routers/reward.js`
+```json
+{
+    "id": "e2e110c7-7b18-48a7-a738-aeeb010830e8",
+    "timestamp": 1578401093559,
+    "verification": "71cc7ef7dabc858b38e9de72a7603c5091adb16942ca2487b3530017de5f5477",
+    "isValid": true
+}
+```
+
+> The reward generation and verification uses a secret, which you should modify by setting the `FEEDBACK_KIOSK_SECRET` environment variable. You can also change the default secret in `./routers/reward.js`
 
