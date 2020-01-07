@@ -17,11 +17,13 @@ const STATUS_CODE_SUCCESS = 200
 const STATUS_CODE_UNAUTHORIZED = 401
 const STATUS_CODE_ERROR = 500
 
-const PORT = 8080
+const PORT = 3001
 
 const app = express()
 const server = http.createServer(app)
 const socket = socketio(server)
+
+const apiRouter = express.Router()
 
 /**
  * Reads the configuration JSON from the filesystem.
@@ -63,13 +65,13 @@ app.use((error, request, response, next) => {
 app.use(express.static(path.join(__dirname, 'static')))
 
 // provide current config
-app.get('/config', (request, response) => {
+apiRouter.get('/config', (request, response) => {
 	response.status(STATUS_CODE_SUCCESS)
-	response.send(config)
+	response.json(config)
 })
 
 // handle feedback
-app.post('/feedback', (request, response) => {
+apiRouter.post('/feedback', (request, response) => {
 	logger.log('verbose', 'Received feedback request body: ', request.body)
 	socket.onFeedbackReceived(request.body)
 
@@ -105,6 +107,8 @@ app.post('/feedback', (request, response) => {
 
 	response.sendStatus(STATUS_CODE_SUCCESS)
 })
+
+app.use(['/api', ''], apiRouter)
 
 // start listening
 server.listen(PORT, () => logger.log('info', `Listening on port ${PORT}`))
