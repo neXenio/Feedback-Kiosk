@@ -1,1 +1,1 @@
-export const defaultBackendPort = 8080
+export const defaultBackendPort = 3001
