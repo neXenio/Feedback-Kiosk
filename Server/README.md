@@ -103,7 +103,7 @@ A `GET` request to `/reward` will create a new reward. Each reward contains a ra
 
 #### Verifying Rewards
 
-A `POST` request to `/reward` with a request body similar to the JSON above will verify the reward. The response status code will be `200` if the reward is valid or `401` if not.
+A `POST` request to `/reward` with a request body similar to the JSON above will verify the reward. The response will be `true` if the reward is valid and `false` if not.
 
 The reward generation and verification uses a secret, which you can modify by setting the `FEEDBACK_KIOSK_SECRET` environment variable.
 

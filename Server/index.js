@@ -9,13 +9,9 @@ const ua = require('universal-analytics')
 const uuidv4 = require('uuid/v4')
 const socketio = require('./socket')
 const logger = require('./logger')
-const Reward = require('./reward')
 
 const CONFIG_PATH_DEFAULT = './feedback-kiosk-config.json'
 const CONFIG_PATH = process.env.FEEDBACK_KIOSK_CONFIG || CONFIG_PATH_DEFAULT
-
-const SECRET_DEFAULT = 'change me!'
-const SECRET = process.env.FEEDBACK_KIOSK_SECRET || SECRET_DEFAULT
 
 const STATUS_CODE_SUCCESS = 200
 const STATUS_CODE_UNAUTHORIZED = 401
@@ -28,6 +24,7 @@ const server = http.createServer(app)
 const socket = socketio(server)
 
 const apiRouter = express.Router()
+const rewardRouter = require('./routers/reward')
 
 /**
  * Reads the configuration JSON from the filesystem.
@@ -112,27 +109,7 @@ apiRouter.post('/feedback', (request, response) => {
 	response.sendStatus(STATUS_CODE_SUCCESS)
 })
 
-// create rewards
-apiRouter.get('/reward', (request, response) => {
-	const reward = new Reward(SECRET)
-	logger.log('info', 'Created reward: ', reward)
-	response.send(reward)
-})
-
-// verify rewards
-apiRouter.post('/reward', (request, response) => {
-	const reward = request.body
-	if (Reward.isValid(reward, SECRET)) {
-		logger.log('info', 'Reward is valid: ', reward)
-		response.status(STATUS_CODE_SUCCESS)
-		response.send('Valid')
-	} else {
-		logger.log('warn', 'Reward is invalid: ', reward)
-		response.status(STATUS_CODE_UNAUTHORIZED)
-		response.send('Invalid')
-	}
-})
-
+apiRouter.use('/reward', rewardRouter)
 app.use(['/api', ''], apiRouter)
 
 // start listening
