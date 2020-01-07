@@ -75,6 +75,11 @@ function App() {
       setCurrentPath("");
       setCurrentStep(config);
       setResetTimer(null);
+      if (config.hasOwnProperty("completionMessage")) {
+        setCompletionMessage(config.completionMessage);
+      } else {
+        setCompletionMessage("Thanks for your feedback!");
+      }
     },
     [config],
   );
