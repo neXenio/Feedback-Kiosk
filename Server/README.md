@@ -10,7 +10,7 @@ A `node.js` application exposing a web server for feedback gathering.
 
 `npm start` to start the server
 
-Open [http://localhost:8080](http://localhost:8080)
+Open [http://localhost:3001](http://localhost:3001)
 
 ### Configuring Feedback Options
 

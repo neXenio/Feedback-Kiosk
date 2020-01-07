@@ -2,7 +2,7 @@ const express = require('express')
 const QRCodeEncoder = require('qrcode')
 const QRCodeDecoder = require('qrcode-reader')
 const Jimp = require("jimp")
-const multer  = require('multer')
+const multer = require('multer')
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 const logger = require('../logger')
@@ -30,7 +30,7 @@ rewardRouter.post('/', (request, response) => {
 	} else {
 		logger.log('warn', 'Reward is invalid: ', reward)
 	}
-	
+
 	response.json(reward)
 })
 
