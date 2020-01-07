@@ -29,5 +29,6 @@
       ]
     }
   ],
-  "analyticsId": "UA-15327134-31"
+  "analyticsId": "UA-15327134-31",
+  "rewardProbability": 0.5
 }

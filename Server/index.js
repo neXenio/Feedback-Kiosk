@@ -5,8 +5,8 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const fs = require('fs')
 const path = require('path')
-const ua = require('universal-analytics');
-const uuidv4 = require('uuid/v4');
+const ua = require('universal-analytics')
+const uuidv4 = require('uuid/v4')
 const socketio = require('./socket')
 const logger = require('./logger')
 
@@ -24,6 +24,7 @@ const server = http.createServer(app)
 const socket = socketio(server)
 
 const apiRouter = express.Router()
+const rewardRouter = require('./routers/reward')
 
 /**
  * Reads the configuration JSON from the filesystem.
@@ -108,6 +109,7 @@ apiRouter.post('/feedback', (request, response) => {
 	response.sendStatus(STATUS_CODE_SUCCESS)
 })
 
+apiRouter.use('/reward', rewardRouter)
 app.use(['/api', ''], apiRouter)
 
 // start listening
