@@ -101,10 +101,13 @@ A `GET` request to `/reward` will create a new reward. Each reward contains a ra
 }
 ```
 
+A `GET` request to `/reward/qr` will `base64` encode a new reward into a QR code.
+
 #### Verifying Rewards
 
-A `POST` request to `/reward` with a request body similar to the JSON above will verify the reward. The response will be `true` if the reward is valid and `false` if not.
+A `POST` request to `/reward` with a request body similar to the JSON above will verify the reward. The response will be a JSON of the reward with an added `isValid` property, which is either `true` or `false`.
 
-The reward generation and verification uses a secret, which you can modify by setting the `FEEDBACK_KIOSK_SECRET` environment variable.
+A `POST` request to `/reward/qr` with a photo of an QR code will parse and verify the encoded reward. The image must be provided as `multipart/form-data`.
 
+The reward generation and verification uses a secret, which you should modify by setting the `FEEDBACK_KIOSK_SECRET` environment variable. You can change the default secret in `./routers/reward.js`
 

@@ -23,13 +23,15 @@ rewardRouter.get('/', (request, response) => {
 // verify rewards
 rewardRouter.post('/', (request, response) => {
 	const reward = request.body
-	if (Reward.isValid(reward, SECRET)) {
+	reward.isValid = Reward.isValid(reward, SECRET)
+
+	if (reward.isValid) {
 		logger.log('info', 'Reward is valid: ', reward)
-		response.json(true)
 	} else {
 		logger.log('warn', 'Reward is invalid: ', reward)
-		response.json(false)
 	}
+	
+	response.json(reward)
 })
 
 // create QR code
