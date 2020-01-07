@@ -60,7 +60,7 @@ function App() {
         
         if (config.hasOwnProperty("completionMessage")) {
           setCompletionMessage(config.completionMessage);
-        }  
+        }
       },
       async error => {
         console.error("Network/connection error", error);
@@ -75,6 +75,11 @@ function App() {
       setCurrentPath("");
       setCurrentStep(config);
       setResetTimer(null);
+      if (config.hasOwnProperty("completionMessage")) {
+        setCompletionMessage(config.completionMessage);
+      } else {
+        setCompletionMessage("Thanks for your feedback!");
+      }
     },
     [config],
   );
@@ -116,6 +121,9 @@ function App() {
     sendFeedback(option);
     setCurrentStep(option);
     setCurrentPath(`${currentPath}/${option.id}`);
+    if (option.hasOwnProperty("completionMessage")) {
+      setCompletionMessage(option.completionMessage);
+    }
   }
 
   function sendFeedback(option) {

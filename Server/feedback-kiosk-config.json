@@ -5,11 +5,13 @@
   "options": [
     {
       "id": "like",
-      "name": "Awesome!"
+      "name": "Awesome!",
+      "completionMessage": "Glad you like it!"
     },
     {
       "id": "dislike",
       "name": "Meh.",
+      "completionMessage": "Thanks for your feedback.",
       "description": "What don't you like about it?",
       "options": [
         {
@@ -27,6 +29,5 @@
       ]
     }
   ],
-  "completionMessage": "Thanks for your feedback. Cheers!",
   "analyticsId": "UA-15327134-31"
 }
