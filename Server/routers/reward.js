@@ -88,4 +88,24 @@ rewardRouter.post('/qr', upload.single('image'), (request, response) => {
 	})
 })
 
+/**
+ * An endpoint for demonstration purposes. If not otherwise specified in
+ * the feedback-kiosk-config.json, scanning a reward QR code will lead
+ * the user to this endpoint.
+ *
+ * In production, the reward URL should point to something with your own
+ * business logic for claiming rewards (e.g. a cloud function) or you
+ * should implement your business logic in this method.
+ */
+rewardRouter.get('/claim', (request, response) => {
+	const encodedReward = request.query.reward
+	const rewardBuffer = Buffer.from(encodedReward, 'base64')
+	const reward = JSON.parse(rewardBuffer.toString('utf-8'))
+	reward.isValid = Reward.isValid(reward, SECRET)
+
+	logger.log('info', 'Parsed reward: ', reward)
+
+	response.send(reward)
+})
+
 module.exports = rewardRouter
