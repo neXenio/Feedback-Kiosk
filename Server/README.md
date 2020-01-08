@@ -48,17 +48,42 @@ The server attempts to parse a configuration file during startup, located at `./
       ]
     }
   ],
+  "reward": {
+    "probability": 0.5,
+    "url": "/api/reward/claim",
+    "message": "Congratulations, you won a reward!"
+  },
   "analyticsId": "UA-XXXXXXXX-XX"
 }
 ```
 
-Options can be nested to create followup questions.
-
-The `analyticsId` should be a [Google Analytics tracking ID](https://support.google.com/analytics/thread/13109681?hl=en) or `null`.
-
-The `completionMessage` can be set to configure a message that will be briefly displayed after completing the survey. Different options can have different completion messages.
-
 You can see the currently active configuration by sending a `GET` request to the `/config` endpoint.
+
+`analyticsId` should be a [Google Analytics tracking ID](https://support.google.com/analytics/thread/13109681?hl=en) or `null`.
+
+`completionMessage` can be set to configure a message that will be briefly displayed after completing the survey. Different options can have different completion messages.
+
+#### Options
+
+Options are possible feedback values that a user can select. They can be nested to create followup questions.
+
+`id`: Unique identifier for the option. Used for analytics event tracking. Required.
+
+`name`: Text that will be displayed. Required.
+
+`description`: Text that will be displayed when showing the follow-up options. Required if `options` are set.
+
+`options`: Follow-up options that will be shown together with the `description` when a user selects this option. Optional, if not set the survey is completed when a user selects this option.
+
+`completionMessage`: Message that will be shown when the survey completed (i.e. when the user selected an option that has no more child options). Optional, will be passed down to follow-up options if not overwritten.
+
+#### Reward
+
+`reward` can be configured to create an incentive for users to provide feedback. A reward will be shown in form of a QR code when users complete the survey. You can configure how likely a reward QR code will be shown by setting the `probability` to a value between 0 and 1. Scanning the QR code will open the configured `url` with the encoded reward appended as query parameter.
+
+If you set the `url` to `https://postman-echo.com/get`, scanning a reward QR code will lead the user to [https://postman-echo.com/get?reward={base64-encoded-reward}](https://postman-echo.com/get?reward=eyJpZCI6IjYzYzBhMjk3LTlhMzktNDE1OS1hNWZlLTEzNDhlNDkxMmU5NCIsInRpbWVzdGFtcCI6MTU3ODQ3NTcwODcxNCwidmVyaWZpY2F0aW9uIjoiNDI2MmRlMzFkYmJlZDU3YjliNzJlYTU0YTZkYzg3MzBmNDUxZTJiYmIzMTQxMjhkMDcxNTU0M2FlYjc1MTg5OSJ9). The encoded reward can be validated using the `/api/reward` endpoint as documented below.
+
+If you keep the `url` at `/api/reward/claim`, the server will automatically validate the reward. You could advice your users to simply share their reward URL with you to claim a reward. You could also adjust the endpoint to include your business logic for claiming rewards (e.g. sending an email or triggering a Slack Webhook).
 
 ### Tracking Feedback
 
