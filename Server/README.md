@@ -10,7 +10,7 @@ A `node.js` application exposing a web server for feedback gathering.
 
 `npm start` to start the server
 
-Open [http://localhost:8080](http://localhost:8080)
+Open [http://localhost:3001](http://localhost:3001)
 
 ### Configuring Feedback Options
 
@@ -89,6 +89,8 @@ Clients can connect to it and listen for the `feedback-received` event. A demo i
 
 The web-app can provide rewards that users may receive after submitting feedback.
 
+The reward generation and verification uses a secret, which you should modify by setting the `FEEDBACK_KIOSK_SECRET` environment variable. You can also change the default secret in `./routers/reward.js`
+
 #### Creating Rewards
 
 A `GET` request to `/reward` will create a new reward. Each reward contains a random UUID, the timestamp of generation, and a hash for verification purposes.
@@ -101,10 +103,19 @@ A `GET` request to `/reward` will create a new reward. Each reward contains a ra
 }
 ```
 
+A `GET` request to `/reward/qr` will `base64` encode a new reward into a QR code.
+
 #### Verifying Rewards
 
-A `POST` request to `/reward` with a request body similar to the JSON above will verify the reward. The response will be `true` if the reward is valid and `false` if not.
+A `POST` request to `/reward` with a request body similar to the JSON above will verify the reward. The response will be a JSON of the reward with an added `isValid` property, which is either `true` or `false`.
 
-The reward generation and verification uses a secret, which you can modify by setting the `FEEDBACK_KIOSK_SECRET` environment variable.
+A `POST` request to `/reward/qr` with a photo of an QR code will parse and verify the encoded reward. The image must be provided as `multipart/form-data`.
 
-
+```json
+{
+    "id": "e2e110c7-7b18-48a7-a738-aeeb010830e8",
+    "timestamp": 1578401093559,
+    "verification": "71cc7ef7dabc858b38e9de72a7603c5091adb16942ca2487b3530017de5f5477",
+    "isValid": true
+}
+```

@@ -47,8 +47,8 @@ function getConfigFromFile(path) {
 const config = getConfigFromFile(CONFIG_PATH)
 
 // setup body parser
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json({ type: 'application/json' }))
 
 // set CORS headers
 app.use(cors())
@@ -57,7 +57,6 @@ app.options('*', cors())
 // handle unexpected errors
 app.use((error, request, response, next) => {
 	logger.log('error', 'Unexpected error: ', error)
-	socket.onAuthenticationError(request.body)
 	response.status(STATUS_CODE_ERROR)
 	response.send(error.message);
 })
