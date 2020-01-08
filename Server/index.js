@@ -62,7 +62,12 @@ app.use((error, request, response, next) => {
 })
 
 // serve static directory
-app.use(express.static(path.join(__dirname, 'static')))
+app.use('/static', express.static(path.join(__dirname, 'static')))
+
+app.get('/', (request, response) => {
+	logger.log('verbose', 'Redirecting to GitHub for documentation')
+	response.redirect('https://github.com/neXenio/Feedback-Kiosk');
+})
 
 // provide current config
 apiRouter.get('/config', (request, response) => {
