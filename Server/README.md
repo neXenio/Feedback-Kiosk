@@ -57,7 +57,7 @@ The server attempts to parse a configuration file during startup, located at `./
 }
 ```
 
-You can see the currently active configuration by sending a `GET` request to the `/config` endpoint.
+You can see the currently active configuration by sending a `GET` request to the `/api/config` endpoint.
 
 `analyticsId` should be a [Google Analytics tracking ID](https://support.google.com/analytics/thread/13109681?hl=en) or `null`.
 
@@ -87,7 +87,7 @@ If you keep the `url` at `/api/reward/claim`, the server will automatically vali
 
 ### Tracking Feedback
 
-The server accepts `POST` requests to the `/feedback` endpoint. The body must be `application/json`, e.g.:
+The server accepts `POST` requests to the `/api/feedback` endpoint. The body must be `application/json`, e.g.:
 
 ```json
 {
@@ -128,13 +128,13 @@ A `GET` request to `/reward` will create a new reward. Each reward contains a ra
 }
 ```
 
-A `GET` request to `/reward/qr` will `base64` encode a new reward into a QR code.
+A `GET` request to `/api/reward/qr` will `base64` encode a new reward into a QR code.
 
 #### Verifying Rewards
 
-A `POST` request to `/reward` with a request body similar to the JSON above will verify the reward. The response will be a JSON of the reward with an added `isValid` property, which is either `true` or `false`.
+A `POST` request to `/api/reward` with a request body similar to the JSON above will verify the reward. The response will be a JSON of the reward with an added `isValid` property, which is either `true` or `false`.
 
-A `POST` request to `/reward/qr` with a photo of an QR code will parse and verify the encoded reward. The image must be provided as `multipart/form-data`.
+A `POST` request to `/api/reward/qr` with a photo of an QR code will parse and verify the encoded reward. The image must be provided as `multipart/form-data`.
 
 ```json
 {

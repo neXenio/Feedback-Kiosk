@@ -113,7 +113,7 @@ apiRouter.post('/feedback', (request, response) => {
 	response.sendStatus(STATUS_CODE_SUCCESS)
 })
 
-apiRouter.use('/reward', rewardRouter)
+apiRouter.use('/reward', rewardRouter(config))
 app.use(['/api', ''], apiRouter)
 
 // start listening
