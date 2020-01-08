@@ -44,8 +44,6 @@ module.exports = (config) => {
 		const rewardBuffer = Buffer.from(JSON.stringify(reward))
 		const encodedReward = rewardBuffer.toString('base64')
 
-		logger.log('verbose', `Encoded reward: ${encodedReward}`)
-
 		var url = config.reward.url
 		if (url.startsWith('/')) {
 			// convert relative to absolute URL
@@ -54,6 +52,8 @@ module.exports = (config) => {
 
 		// TODO: parse URL and set query parameter instead of this
 		const qrCodeData = `${url}?reward=${encodedReward}`
+
+		logger.log('verbose', `QR code data: ${qrCodeData}`)
 
 		const options = {
 			type: 'png',

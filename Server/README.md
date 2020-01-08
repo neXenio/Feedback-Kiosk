@@ -81,7 +81,7 @@ Options are possible feedback values that a user can select. They can be nested 
 
 `reward` can be configured to create an incentive for users to provide feedback. A reward will be shown in form of a QR code when users complete the survey. You can configure how likely a reward QR code will be shown by setting the `probability` to a value between 0 and 1. Scanning the QR code will open the configured `url` with the encoded reward appended as query parameter.
 
-If you set the `url` to `https://postman-echo.com/get`, scanning a reward QR code will lead the user to [https://postman-echo.com/get?reward={base64-encoded-reward}](https://postman-echo.com/get?reward=eyJpZCI6IjYzYzBhMjk3LTlhMzktNDE1OS1hNWZlLTEzNDhlNDkxMmU5NCIsInRpbWVzdGFtcCI6MTU3ODQ3NTcwODcxNCwidmVyaWZpY2F0aW9uIjoiNDI2MmRlMzFkYmJlZDU3YjliNzJlYTU0YTZkYzg3MzBmNDUxZTJiYmIzMTQxMjhkMDcxNTU0M2FlYjc1MTg5OSJ9). The encoded reward can be validated using the `/api/reward` endpoint as documented below.
+If you set the `url` to `https://postman-echo.com/get`, scanning a reward QR code will lead the user to `https://postman-echo.com/get?reward={encoded-reward}`. The encoded reward can be validated using the `/api/reward` endpoint as documented below.
 
 If you keep the `url` at `/api/reward/claim`, the server will automatically validate the reward. You could advice your users to simply share their reward URL with you to claim a reward. You could also adjust the endpoint to include your business logic for claiming rewards (e.g. sending an email or triggering a Slack Webhook).
 
