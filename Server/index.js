@@ -62,7 +62,12 @@ app.use((error, request, response, next) => {
 })
 
 // serve static directory
-app.use(express.static(path.join(__dirname, 'static')))
+app.use('/static', express.static(path.join(__dirname, 'static')))
+
+app.get('/', (request, response) => {
+	logger.log('verbose', 'Redirecting to GitHub for documentation')
+	response.redirect('https://github.com/neXenio/Feedback-Kiosk');
+})
 
 // provide current config
 apiRouter.get('/config', (request, response) => {
@@ -108,7 +113,7 @@ apiRouter.post('/feedback', (request, response) => {
 	response.sendStatus(STATUS_CODE_SUCCESS)
 })
 
-apiRouter.use('/reward', rewardRouter)
+apiRouter.use('/reward', rewardRouter(config))
 app.use(['/api', ''], apiRouter)
 
 // start listening
